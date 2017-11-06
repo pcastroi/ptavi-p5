@@ -26,3 +26,57 @@ Cuestiones:
 *7:
 ** Se usa STUN para que saber mi dirección IP pública, el puerto asociado con el puerto local a través de NAT y el tipo de NAT que estoy usando.
 ** Sabemos que estamos tras un NAT ya que la dirección IP que usamos para comunicarnos es privada, además, la respuesta que nos dió el servidor antes nos hizo saber que la direccion que tenemos es 83.36.48.212 pero que estamos en un NAT. Para hacer STUN llamamos al servidor STUN (dirección IP: 194.39.182.230).
+
+*8:
+** La dirección IP del servidor Registrar es 86.64.162.35 aunque no sabemos con certeza que vaya a ser esa porque podria estar usando un proxy.
+** Se envían los paquetes al puerto 5060.
+** Utiliza el método 'REGISTER'
+** El UA entiende además: INVITE,ACK,OPTIONS,BYE,CANCEL,NOTIFY,REFER,MESSAGE
+
+*9:
+** No, ya que poco después recibe la respuesta: SIP/2.0 401 Unauthorized.
+** Sabremos que el registro se ha realizado correctamente si la respuesta a nuestro 'REGISTER' es un mensaje 'SIP/2.0 200 OK'.
+** Una de las principales diferencias es el tamaño de los paquetes y el número de secuencia de cada una de las solicitudes 'REGISTER'. Otra diferencia es que en el segundo 'REGISTER' incluimos en la cabecera de SIP el campo 'Authorization'.
+** Son 3600 segundos en ambas solicitudes.
+
+*10:
+** Si se puede: Gregorio Robles ; <sip:grex@ekiga.net>
+** El cuerpo de la trama anuncia que va a poder enviar audio y video (mediante RTP/AVP). Usa el protocolo SDP.
+** El primer intento no tiene éxito ya que tras enviar el primer 'INVITE', recibimos: 'SIP/2.0 407 Proxy Authentication Required' lo cual nos indica que ese primer mensaje no va a ser aceptado por el servidor.
+** Se diferencia en el tamaño del paquete, en el número de secuencia y en que el segundo 'INVITE' tiene en su cabecera SIP el campo 'Proxy-Authorization'. Como el primer mensaje fue rechazado por el servidor (debido a que se requiere una autenticación de proxy), el segundo mensaje contiene tal campo en su cabecera para ser aceptado por el servidor.
+
+*11:
+** Se usan RTP y RTP(ITU-T Recommendation H.261).
+** El tamaño de todos los paquetes es de 214 para RTP y para los que usan RTP(ITU-T Recommendation H.261) es un número variable.
+** No.
+** G.711 trabaja con una frecuencia de muestreo 8Khz y una tasa de 64kbit/s. Nuestros mensajes envían 160 bytes por lo que si en 1 segundo muestreo 8000 bytes, en x segundos muestreo 160 bytes. Esa x es 1/50 ms (20 ms).
+** La tasa que se usa es de 64kbit/s.
+
+*12:
+** Hay dos flujos, uno para ITU-T H.261(video) y otro para ITU-T G.711 PCMA(audio).
+** No se pierde ningún paquete.
+** El valor máximo del delta es 1290.44 ms. Es el tiempo máximo registrado que ha pasado entre dos paquetes RTP, analíticamente la delta debería ser siempre 20ms ya que ese es el periodo de transmisión del protocolo.
+** Jitter máximo: 119.64 ms, Jitter medio: 42.50 ms. Lo que eso significa es que es una variación temporal a la llegada del mensaje, siguiendo una Gaussiana. No es una conversación de calidad ya que los mensajes no llegan uniformemente.
+
+*13:
+** La delta y el jitter valen 0 para el primer paquete enviado ya que son los que comienzan la transmision.
+** Si, ya que si timestamp es 0 y además tiene a True el flag Mark.
+** Hasta el paquete 247.
+** Se debe a que la delta ha aumentado consiredablemente y esto también afectará al jitter.
+** No son comparables porque cuando llega tarde se acaba recuperando el tiempo que habiamos perdido.
+** Serán mis 20 ms calculados analíticamente con mi delta actual y siguendo la proporción entre deltas y jitter.
+
+*14:
+** Dura 4294950,127 segundos.
+** Sus SSRC son 0x43306582(video) y 0xbf4afd37(audio). Hay varios SSRCs porque hay 2 flujos simultaneos, ITU-T H.261(video) y ITU-T G.711 PCMA(audio). No hay CSRC.
+
+*15:
+** Se usa el método 'BYE'.
+** En las tramas 924, 925, 927 y 933.
+** Porque los 3 primeros no llegan al servidor ya que se envía desde el mismo un mesaje de error de que el destino es inalcanzable (por el puerto).
+
+*16:
+** Se usa para dar de baja al usuario (se envía el mensaje con Expires = 0).
+** En la 952 ya que el mensaje anterior fue un intento fallido(solicitud no aceptada por el servidor).
+** En que ahora el Expires vale 0, entonces en cuanto le llegue al servidor se va a borrar como usuario. De esta manera, el servidor puede hacerse cargo de varias máquinas y asegurarse de que en cuanto estas acaben las comunicaciones, su lista de usuarios activos se va a quedar vacía.
+
