@@ -6,4 +6,23 @@ Cuestiones:
 
 *3:
 ** UDP es el que tiene mayor porcentaje de tráfico. En una aplicación que transmite a tiempo real, nos interesa menos la fiabilidad ya que si un paquete llega tarde o no llega, no es crítico de cara al usuario.
-** Aparte de UDP y TCP(Contenidos en IP, que a su vez está contenido en Ethernet), podemos ver que se usa SIP, RTP, RTCP, DNS, HTTP, ARP, ICMP, STUN. De tales paquetes, consideraremos ruido como aquellos que usen los protocolos ARP, DNS, ICMP, RTCP.
+** Aparte de UDP y TCP(Contenidos en IP, que a su vez está contenido en Ethernet), podemos ver que se usa SIP, RTP, RTCP, DNS, HTTP, ARP, ICMP, STUN. De tales paquetes, consideraremos ruido como aquellos que usen los protocolos ARP, ICMP, RTCP.
+
+*4:
+** Envios SIP: Entre el segundo 6 y el 8, entre el segundo 13 y el 17, entre el segundo 37 y el 40 y entre el segundo 54 y 55.
+** Envios RTP: Entre el segundo 16 y el 38.
+
+*5:
+** Se usa DNS.
+** La IP del servidor de nombres del ordenador que ha lanzado Ekiga es 80.58.61.250.
+** Devuelve la dirección 86.64.162.35.
+
+*6:
+** http://ekiga.net/ip/
+** User-Agent: Ekiga
+** El servidor devuelve: HTTP/1.1 200 OK (Respuesta: 83.36.48.212)
+** Recibo: 212.128.255.9, el servidor responde con mi propia IP de mi ordenador.
+
+*7:
+** Se usa STUN para que saber mi dirección IP pública, el puerto asociado con el puerto local a través de NAT y el tipo de NAT que estoy usando.
+** Sabemos que estamos tras un NAT ya que la dirección IP que usamos para comunicarnos es privada, además, la respuesta que nos dió el servidor antes nos hizo saber que la direccion que tenemos es 83.36.48.212 pero que estamos en un NAT. Para hacer STUN llamamos al servidor STUN (dirección IP: 194.39.182.230).
