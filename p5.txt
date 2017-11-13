@@ -80,3 +80,14 @@ Cuestiones:
 ** En la 952 ya que el mensaje anterior fue un intento fallido(solicitud no aceptada por el servidor).
 ** En que ahora el Expires vale 0, entonces en cuanto le llegue al servidor se va a borrar como usuario. De esta manera, el servidor puede hacerse cargo de varias máquinas y asegurarse de que en cuanto estas acaben las comunicaciones, su lista de usuarios activos se va a quedar vacía.
 
+*19:
+** Si se usa DNS pero no STUN, el DNS se usa para resolver la dirección del nombre asignado a la otra persona con la que tenemos la llamada (el nombre sabemos que no va a cambiar y que es mas fiable que conocer directamente la IP). El STUN no aparece ya que las IPs que tenemos aquí son públicas y al resolver los nombres, no se iniciará STUN ya que está asegurado que no están tras una NAT.
+** La descripción de la sesión solamente se usa en 2 mensajes, un INVITE y un ACK. Por lo que si van a ser distintos ya que en ningún mensaje de REGISTER aparece SDP. Ocurre lo mismo en las 2 capturas.
+
+*20:
+** Tenemos 4 flujos, de los cuales podemos identificar el audio que me llega del otro usuario y el audio que envío (Payload Speex(audio)), los otros dos tienen como Payload Unassigned y ni siquiera aparece en la descripción de RTP ninguna información acerca de que tipo de datos se envían, añadir además que estos dos flujos tienen unas pérdidas del 97,9%.
+** G.711 trabaja con una frecuencia de muestreo 8Khz y una tasa de 64kbit/s. Nuestros mensajes envían 320 bytes (valor de timestamp) por lo que si en 1 segundo muestreo 8000 bytes, en x segundos muestreo 320 bytes. Esa x es 1/25 ms (40 ms).
+** En el flujo de audio de mi máquina a la otra: Max Delta 49.88 ms, Max Jitter 13.55 ms, Mean Jitter 13.09 ms ; En el flujo de audio de la otra máquina a la mía: Max Delta 33.54 ms, Max Jitter 13.68 ms, Mean Jitter 13.11 ms.
+** Si podría, mediante Play Streams.
+** Ofrece audio (Music on Hold sip:9999@qxip.net (Curtesy of QUASARMUSIQ)).
+
