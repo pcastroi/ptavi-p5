@@ -90,4 +90,3 @@ Cuestiones:
 ** En el flujo de audio de mi máquina a la otra: Max Delta 49.88 ms, Max Jitter 13.55 ms, Mean Jitter 13.09 ms ; En el flujo de audio de la otra máquina a la mía: Max Delta 33.54 ms, Max Jitter 13.68 ms, Mean Jitter 13.11 ms.
 ** Si podría, mediante Play Streams.
 ** Ofrece audio (Music on Hold sip:9999@qxip.net (Curtesy of QUASARMUSIQ)).
-
